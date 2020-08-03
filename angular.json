@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "landpage"
+    }
+  },
+  "defaultProject": "landpage",
+  "cli": {
+    "analytics": false
+  }
 }
