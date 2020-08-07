@@ -13,6 +13,9 @@ import { SplashScreenService } from '../@vex/services/splash-screen.service';
 import { Style, StyleService } from '../@vex/services/style.service';
 import { ConfigName } from '../@vex/interfaces/config-name.model';
 
+
+import icContacts from "@iconify/icons-ic/twotone-contacts";
+import icReceipt from "@iconify/icons-ic/twotone-receipt";
 @Component({
   selector: 'vex-root',
   templateUrl: './app.component.html',
@@ -82,6 +85,40 @@ export class AppComponent {
         label: 'Dashboard',
         route: '/',
         icon: icLayers
+      },
+      {
+        type: "subheading",
+        label: "Funcionalidad",
+        children: [
+          {
+            type: "link",
+            label: "Clientes",
+            route: "/apps/clientes",
+            icon: icContacts,
+          },
+          {
+            type: "dropdown",
+            label: "Contratos",
+            icon: icReceipt,
+            children: [
+              {
+                type: "link",
+                label: "Lista de Contratos",
+                route: "/apps/contratos",
+              },
+              {
+                type: "link",
+                label: "Nuevo Contrato",
+                route: "/apps/contratos/create",
+              },
+              {
+                type: "link",
+                label: "Mi Contrato",
+                route: "/apps/contratos/ver",
+              },
+            ],
+          },
+        ],
       }
     ];
   }
