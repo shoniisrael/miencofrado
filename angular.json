@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "landpage": {
+    "miencofrado": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/landpage",
+            "outputPath": "dist/miencofrado",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "landpage:build"
+            "browserTarget": "miencofrado:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "landpage:build:production"
+              "browserTarget": "miencofrado:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "landpage:build"
+            "browserTarget": "miencofrado:build"
           }
         },
         "test": {
@@ -114,11 +114,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "landpage:serve"
+            "devServerTarget": "miencofrado:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "landpage:serve:production"
+              "devServerTarget": "miencofrado:serve:production"
             }
           }
         },
@@ -129,7 +129,7 @@
       }
     }
   },
-  "defaultProject": "landpage",
+  "defaultProject": "miencofrado",
   "cli": {
     "analytics": false
   }
