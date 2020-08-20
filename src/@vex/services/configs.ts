@@ -21,8 +21,8 @@ const defaultConfig: Config = {
     position: 'below-toolbar'
   },
   footer: {
-    visible: true,
-    fixed: true
+    visible: false,
+    fixed: false
   }
 };
 

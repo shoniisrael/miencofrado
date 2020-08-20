@@ -6,37 +6,54 @@ const routes: Routes = [
   {
     path: '',
     component: CustomLayoutComponent,
-    children: []
-  },   
+    children: [],
+  },
   {
-    path: "apps",
-    children: [   
+    path: 'apps',
+    children: [
       {
-        path: "clientes",
+        path: '',
         loadChildren: () =>
-          import("./pages/apps/clientes/aio-table.module").then(
+          import('./pages/apps/clientes/aio-table.module').then(
             (m) => m.AioTableModule
           ),
+        data: {
+          toolbarShadowEnabled: true,
+        },
       },
       {
-        path: "contratos",
+        path: 'clientes',
         loadChildren: () =>
-          import("./pages/apps/contratos/contratos.module").then(
+          import('./pages/apps/clientes/aio-table.module').then(
+            (m) => m.AioTableModule
+          ),
+        data: {
+          toolbarShadowEnabled: true,
+        },
+      },
+      {
+        path: 'contratos',
+        loadChildren: () =>
+          import('./pages/apps/contratos/contratos.module').then(
             (m) => m.ContratosModule
           ),
-      }   
+        data: {
+          toolbarShadowEnabled: true,
+        },
+      },
     ],
-  }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    // preloadingStrategy: PreloadAllModules,
-    scrollPositionRestoration: 'enabled',
-    relativeLinkResolution: 'corrected',
-    anchorScrolling: 'enabled'
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      // preloadingStrategy: PreloadAllModules,
+      scrollPositionRestoration: 'enabled',
+      relativeLinkResolution: 'corrected',
+      anchorScrolling: 'enabled',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}
