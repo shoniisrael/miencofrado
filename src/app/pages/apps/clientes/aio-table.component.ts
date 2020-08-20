@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   Input,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -20,7 +19,6 @@ import { FormControl } from '@angular/forms';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '../../../../@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '../../../../@vex/animations/stagger.animation';
-import theme from '../../../../../tailwind.config.js';
 //iconos
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
@@ -34,8 +32,8 @@ import icMail from '@iconify/icons-ic/twotone-mail';
 import icMap from '@iconify/icons-ic/twotone-map';
 //Manejo de Datos
 import { Observable, ReplaySubject } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter } from 'rxjs/operators';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { map } from 'rxjs/operators';
@@ -46,14 +44,16 @@ import { queryGetClientes } from 'src/app/services/clientes';
 import { DeleteClienteGQL } from './graphql/DeleteClienteGQL';
 import { CustomerCreateUpdateComponent } from './customer-create-update/customer-create-update.component';
 
-import { LayoutService } from '../../../../@vex/services/layout.service';
+
+
 import { startWith } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { checkRouterChildsData } from '../../../../@vex/utils/check-router-childs-data';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ConfigService } from '../../../../@vex/services/config.service';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { SidebarComponent } from '../../../../@vex/components/sidebar/sidebar.component';
+
+import { MatSelectChange } from '@angular/material/select';
 
 export type Query = {
   cliente: Cliente[];
@@ -75,31 +75,13 @@ const GetClientes = queryGetClientes;
     },
   ],
 })
-export class AioTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  layoutCtrl = new FormControl('fullwidth');
+export class AioTableComponent implements OnInit, AfterViewInit {
+  layoutCtrl = new FormControl('boxed'); //fullwidth
+  
   subject$: ReplaySubject<Cliente[]> = new ReplaySubject<Cliente[]>(1);
   data$: Observable<Cliente[]> = this.subject$.asObservable();
   data: Observable<Cliente[]>;
   customers: Cliente[];
-
-  sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
-  isFooterVisible$ = this.configService.config$.pipe(
-    map((config) => config.footer.visible)
-  );
-  isDesktop$ = this.layoutService.isDesktop$;
-
-  toolbarShadowEnabled$ = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    startWith(null),
-    map(() =>
-      checkRouterChildsData(
-        this.router.routerState.root.snapshot,
-        (data) => data.toolbarShadowEnabled
-      )
-    )
-  );
-
-  @ViewChild('configpanel', { static: true }) configpanel: SidebarComponent;
 
   @Input()
   columns: TableColumn<Cliente>[] = [
@@ -138,6 +120,7 @@ export class AioTableComponent implements OnInit, AfterViewInit, OnDestroy {
   selection = new SelectionModel<Cliente>(true, []);
   searchCtrl = new FormControl();
 
+  // labels = aioTableLabels;
   icPhone = icPhone;
   icMail = icMail;
   icMap = icMap;
@@ -149,8 +132,6 @@ export class AioTableComponent implements OnInit, AfterViewInit, OnDestroy {
   icMoreHoriz = icMoreHoriz;
   icFolder = icFolder;
 
-  theme = theme;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -158,9 +139,6 @@ export class AioTableComponent implements OnInit, AfterViewInit, OnDestroy {
     private dialog: MatDialog,
     private apollo: Apollo,
     private deleteClienteGQL: DeleteClienteGQL,
-    private layoutService: LayoutService,
-    private configService: ConfigService,
-    private breakpointObserver: BreakpointObserver,
     private router: Router
   ) {}
 
@@ -178,10 +156,6 @@ export class AioTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.layoutService.configpanelOpen$.pipe(
-      untilDestroyed(this)
-    ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());
-
     this.getData().subscribe((customers) => {
       this.subject$.next(customers);
     });
@@ -204,7 +178,6 @@ export class AioTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createCustomer() {
-    console.log(this.searchCtrl.value);
     this.dialog
       .open(CustomerCreateUpdateComponent)
       .afterClosed()
@@ -281,12 +254,10 @@ export class AioTableComponent implements OnInit, AfterViewInit, OnDestroy {
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+      : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>) {
     return column.property;
-  }
-
-  ngOnDestroy() {}
+  } 
 }
