@@ -66,29 +66,26 @@ export class InvoiceComponent implements OnInit {
   // valor_total: null
 
   getData() {
-    this.contrato_data = this.verContratoGQL
-      .watch()
-      .valueChanges.pipe(map((result) => result.data.contrato));
-    // .subscribe(
-    //   ({ data }) => {
-    //     console.log(data);
-    //     // this.subject$.next(data);
-    //     this.openSnackbar("Contrato Recuperado Exitosamente");
-    //   },
-    //   (error) => {
-    //     console.log("Error al Recuperado el Contrato", error);
-    //     this.openSnackbar("Error al Recuperado el Contrato");
-    //   }
-    // );
+    return this.verContratoGQL.mutate({
+      // articulo_alquilers: this.verticalContratoFormGroup.value
+    });
+    // return this.data;
   }
 
   ngOnInit() {
-    this.getData();
-    // this.getData().subscribe((contrato) => {
-    //   this.contrato = contrato;
-    //   this.dataSource.data = examenes;
-    //   this.subject$.next(examenes);
-    // }); // TODO Get by id Paciente Actual
+    this.getData().subscribe(
+      ({ data }) => {
+        console.log(data);
+        this.contrato = data.contrato_alquiler_by_pk;
+        console.log(this.contrato);
+        // this.subject$.next(data);
+        this.openSnackbar("Contrato Recuperado Exitosamente");
+      },
+      (error) => {
+        console.log("Error al Recuperado el Contrato", error);
+        this.openSnackbar("Error al Recuperado el Contrato");
+      }
+    );
   }
 
   openSnackbar(mensaje: string) {
