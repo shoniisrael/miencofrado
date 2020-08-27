@@ -2,10 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import icMail from "@iconify/icons-ic/twotone-mail";
 import icPhone from "@iconify/icons-ic/twotone-phone";
 import { fadeInUp400ms } from "../../../../../@vex/animations/fade-in-up.animation";
+//data
 import { Observable, ReplaySubject } from "rxjs";
+import { map } from "rxjs/operators";
 
 import { Contrato } from "src/app/models/contratoalquiler.model";
-import { map } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { VerContratoGQL } from "../graphql/VerContratoGQL";
 import { DatePipe } from "@angular/common";
@@ -21,6 +22,8 @@ export class InvoiceComponent implements OnInit {
   icMail = icMail;
   icPhone = icPhone;
   data: Observable<Contrato>;
+  contrato: Contrato;
+  contrato_data: Observable<Contrato>;
   constructor(
     private snackbar: MatSnackBar,
     private verContratoGQL: VerContratoGQL,
@@ -31,23 +34,23 @@ export class InvoiceComponent implements OnInit {
   // area: "28"
   // articulo_alquilers: []
   // cliente: {
-    //     cedula: "111111"
-    //     direccion: "ambato"
-    //     direccion2: "ambato"
-    //     email: "correo@hasjnd"
-    //     nombre: "vale"
-    //     nombre2: "fernanda"
-    //     observacion: null
-    //     telf1: "55565"
-    //     telf2: null
-    //     telf3: null    
-    // }
+  //     cedula: "111111"
+  //     direccion: "ambato"
+  //     direccion2: "ambato"
+  //     email: "correo@hasjnd"
+  //     nombre: "vale"
+  //     nombre2: "fernanda"
+  //     observacion: null
+  //     telf1: "55565"
+  //     telf2: null
+  //     telf3: null
+  // }
   // descripcion: null
   // detalle_pagos: [
-    //     fecha 
-    //     observacion 
-    //     saldo 
-    //     valor
+  //     fecha
+  //     observacion
+  //     saldo
+  //     valor
   // ]
   // devuelto: null
   // estado_actual: {descripcion: "INICIADO"}
@@ -63,25 +66,29 @@ export class InvoiceComponent implements OnInit {
   // valor_total: null
 
   getData() {
-    this.verContratoGQL
-      .mutate({
-        // articulo_alquilers: this.verticalContratoFormGroup.value
-      })
-      .subscribe(
-        ({ data }) => {
-          console.log(data);
-          // this.subject$.next(data);
-          this.openSnackbar("Contrato Recuperado Exitosamente");
-        },
-        (error) => {
-          console.log("Error al Recuperado el Contrato", error);
-          this.openSnackbar("Error al Recuperado el Contrato");
-        }
-      );
+    this.contrato_data = this.verContratoGQL
+      .watch()
+      .valueChanges.pipe(map((result) => result.data.contrato));
+    // .subscribe(
+    //   ({ data }) => {
+    //     console.log(data);
+    //     // this.subject$.next(data);
+    //     this.openSnackbar("Contrato Recuperado Exitosamente");
+    //   },
+    //   (error) => {
+    //     console.log("Error al Recuperado el Contrato", error);
+    //     this.openSnackbar("Error al Recuperado el Contrato");
+    //   }
+    // );
   }
 
   ngOnInit() {
     this.getData();
+    // this.getData().subscribe((contrato) => {
+    //   this.contrato = contrato;
+    //   this.dataSource.data = examenes;
+    //   this.subject$.next(examenes);
+    // }); // TODO Get by id Paciente Actual
   }
 
   openSnackbar(mensaje: string) {
