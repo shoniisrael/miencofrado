@@ -10,6 +10,8 @@ import { Contrato } from "src/app/models/contratoalquiler.model";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { VerContratoGQL } from "../graphql/VerContratoGQL";
 import { DatePipe } from "@angular/common";
+import { Cliente } from "src/app/models/cliente.model";
+import { EstadoActual } from 'src/app/models/estadoactual.model';
 
 @Component({
   selector: "vex-invoice",
@@ -22,56 +24,25 @@ export class InvoiceComponent implements OnInit {
   icMail = icMail;
   icPhone = icPhone;
   data: Observable<Contrato>;
-  contrato = {} as  Contrato;
-  constructor(    
+  contrato = {} as Contrato;
+
+  constructor(
     private snackbar: MatSnackBar,
     private verContratoGQL: VerContratoGQL,
     private datePipe: DatePipe
   ) {}
 
-  // contrato_alquiler_by_pk:
-  // area: "28"
-  // articulo_alquilers: []
-  // cliente: {
-  //     cedula: "111111"
-  //     direccion: "ambato"
-  //     direccion2: "ambato"
-  //     email: "correo@hasjnd"
-  //     nombre: "vale"
-  //     nombre2: "fernanda"
-  //     observacion: null
-  //     telf1: "55565"
-  //     telf2: null
-  //     telf3: null
-  // }
-  // descripcion: null
-  // detalle_pagos: [
-  //     fecha
-  //     observacion
-  //     saldo
-  //     valor
-  // ]
-  // devuelto: null
-  // estado_actual: {descripcion: "INICIADO"}
-  // fecha_entrega: null
-  // fecha_inicio: null
-  // lugar_obra: "mi casa"
-  // metros: "26"
-  // numero: 5
-  // observacion: "ninguna"
-  // pago_cancelado: null
-  // transporte_devolucion: null
-  // transporte_entrega: null
-  // valor_total: null
-
   getData() {
     return this.verContratoGQL.mutate({
       // articulo_alquilers: this.verticalContratoFormGroup.value
     });
-    // return this.data;
   }
 
   ngOnInit() {
+    this.contrato.cliente = {} as Cliente;
+    this.contrato.estado_actual = {} as EstadoActual;
+    // this.contrato.detalle_pagos = {} as any;
+    
     this.getData().subscribe(
       ({ data }) => {
         // console.log(data);
