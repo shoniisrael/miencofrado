@@ -62,6 +62,12 @@ export class VerContratoGQL extends Mutation<Response> {
           saldo
           valor
         }
+        detalle_pagos {
+          fecha
+          observacion
+          saldo
+          valor
+        }
         estado_actual {
           descripcion
         }
