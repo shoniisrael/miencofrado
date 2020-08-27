@@ -11,8 +11,8 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { VerContratoGQL } from "../graphql/VerContratoGQL";
 import { DatePipe } from "@angular/common";
 import { Cliente } from "src/app/models/cliente.model";
-import { EstadoActual } from 'src/app/models/estadoactual.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { EstadoActual } from "src/app/models/estadoactual.model";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "vex-invoice",
@@ -26,6 +26,7 @@ export class InvoiceComponent implements OnInit {
   icPhone = icPhone;
   data: Observable<Contrato>;
   contrato = {} as Contrato;
+  id = 1;
 
   constructor(
     private snackbar: MatSnackBar,
@@ -34,8 +35,9 @@ export class InvoiceComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.route.params.subscribe(params => {
-      console.log(params);
+    this.route.params.subscribe((params) => {
+      console.log(params.id);
+      this.id = params.id;
       // if (params['term']) { (1)
       //   this.doSearch(params['term'])
       // }
@@ -44,7 +46,7 @@ export class InvoiceComponent implements OnInit {
     this.contrato.cliente = {} as Cliente;
     this.contrato.estado_actual = {} as EstadoActual;
     // this.contrato.detalle_pagos = {} as any;
-    
+
     this.getData().subscribe(
       ({ data }) => {
         // console.log(data);
@@ -62,13 +64,11 @@ export class InvoiceComponent implements OnInit {
 
   getData() {
     return this.verContratoGQL.mutate({
-      id: 10
+      id: this.id,
     });
   }
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
 
   openSnackbar(mensaje: string) {
     this.snackbar.open(mensaje, "cerrar", {
