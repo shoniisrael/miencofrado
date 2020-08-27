@@ -12,6 +12,7 @@ import { VerContratoGQL } from "../graphql/VerContratoGQL";
 import { DatePipe } from "@angular/common";
 import { Cliente } from "src/app/models/cliente.model";
 import { EstadoActual } from 'src/app/models/estadoactual.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: "vex-invoice",
@@ -29,16 +30,17 @@ export class InvoiceComponent implements OnInit {
   constructor(
     private snackbar: MatSnackBar,
     private verContratoGQL: VerContratoGQL,
-    private datePipe: DatePipe
-  ) {}
-
-  getData() {
-    return this.verContratoGQL.mutate({
-      id: 10
+    private datePipe: DatePipe,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.params.subscribe(params => {
+      console.log(params);
+      // if (params['term']) { (1)
+      //   this.doSearch(params['term'])
+      // }
     });
-  }
 
-  ngOnInit() {
     this.contrato.cliente = {} as Cliente;
     this.contrato.estado_actual = {} as EstadoActual;
     // this.contrato.detalle_pagos = {} as any;
@@ -56,6 +58,16 @@ export class InvoiceComponent implements OnInit {
         this.openSnackbar("Error al Recuperado el Contrato");
       }
     );
+  }
+
+  getData() {
+    return this.verContratoGQL.mutate({
+      id: 10
+    });
+  }
+
+  ngOnInit() {
+   
   }
 
   openSnackbar(mensaje: string) {

@@ -20,15 +20,9 @@ const routes: VexRoutes = [
       toolbarShadowEnabled: true
     }    
   },  
+ 
   {
-    path: "ver",
-    loadChildren: () =>
-      import("./invoice/invoice.module").then(
-        (m) => m.InvoiceModule
-      ),
-  },
-  {
-    path: "ver/{id}",
+    path: "ver/:id",
     loadChildren: () =>
       import("./invoice/invoice.module").then(
         (m) => m.InvoiceModule

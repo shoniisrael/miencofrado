@@ -16,7 +16,7 @@ import { MatSort } from "@angular/material/sort";
 // import { MatDialog } from "@angular/material/dialog";
 import { SelectionModel } from "@angular/cdk/collections";
 import { FormControl } from "@angular/forms";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 //vex
 import { TableColumn } from "../../../../@vex/interfaces/table-column.interface";
 import { fadeInUp400ms } from "../../../../@vex/animations/fade-in-up.animation";
@@ -75,13 +75,28 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   columns: TableColumn<Contrato>[] = [
-    { label: "Checkbox",property: "checkbox",type: "checkbox",visible: true,},
-    { label: "cliente.nombre", property: "cliente.nombre", type: "text", visible: true },
+    {
+      label: "Checkbox",
+      property: "checkbox",
+      type: "checkbox",
+      visible: true,
+    },
+    {
+      label: "cliente.nombre",
+      property: "cliente.nombre",
+      type: "text",
+      visible: true,
+    },
     { label: "numero", property: "numero", type: "text", visible: true },
     { label: "Actions", property: "actions", type: "button", visible: true },
-    
+
     { label: "lugar", property: "lugar_obra", type: "text", visible: true },
-    { label: "estado", property: "estado_actual.descripcion", type: "text", visible: true },
+    {
+      label: "estado",
+      property: "estado_actual.descripcion",
+      type: "text",
+      visible: true,
+    },
     { label: "area", property: "area", type: "text", visible: true },
     { label: "metros", property: "metros", type: "text", visible: true },
     {
@@ -116,9 +131,8 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private apollo: Apollo
-  ) // private deleteContratoGQL: DeleteContratoGQL
-  {}
+    private apollo: Apollo // private deleteContratoGQL: DeleteContratoGQL
+  ) {}
 
   get visibleColumns() {
     return this.columns
@@ -127,13 +141,9 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getData() {
-    this.data =  this.apollo
+    this.data = this.apollo
       .watchQuery<Query>({ query: GetContratos })
-      .valueChanges.pipe(
-        map(({ data }) => 
-          data.contrato_alquiler
-        )
-      );
+      .valueChanges.pipe(map(({ data }) => data.contrato_alquiler));
     return this.data;
   }
 
@@ -143,7 +153,6 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
       // console.log(customers);
       // console.log(customers[0].cliente.nombre);
     });
-   
 
     this.dataSource = new MatTableDataSource();
 
@@ -153,7 +162,6 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(this.customers);
       console.log(this.dataSource.data);
     });
-   
 
     this.searchCtrl.valueChanges
       .pipe(untilDestroyed(this))
@@ -166,7 +174,10 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   createCustomer() {
-    this.router.navigate(['apps/contratos/create']);    
+    this.router.navigate(["apps/contratos/create"]);
+  }
+  viewContrato() {
+    this.router.navigate(["apps/contratos/ver", 2 ]);
   }
 
   updateCustomer(customer: Contrato) {

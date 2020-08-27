@@ -31,10 +31,13 @@ export class VerContratoGQL extends Mutation<Response> {
         transporte_entrega
         valor_total
         articulo_alquilers {
+          id
           articulo {
+            id
             nombre_producto
           }
           historial_devolucions {
+            id
             cantidad_devuelto
             cantidad_entregado
             cantidad
@@ -45,6 +48,7 @@ export class VerContratoGQL extends Mutation<Response> {
           especificaciones_producto
         }
         cliente {
+          id
           cedula
           direccion
           direccion2
@@ -57,18 +61,21 @@ export class VerContratoGQL extends Mutation<Response> {
           telf3
         }
         detalle_pagos {
+          id
           fecha
           observacion
           saldo
           valor
         }
         detalle_pagos {
+          id
           fecha
           observacion
           saldo
           valor
         }
         estado_actual {
+          id
           descripcion
         }
       }
