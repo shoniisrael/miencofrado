@@ -9,13 +9,13 @@ const defaultConfig: Config = {
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'VEX',
+    title: 'Mi EncofradoApp',
     imageUrl: 'assets/img/logo.png',
     showCollapsePin: true,
     state: 'expanded'
   },
   toolbar: {
-    fixed: true
+    fixed: false
   },
   navbar: {
     position: 'below-toolbar'

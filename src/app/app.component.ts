@@ -22,7 +22,7 @@ import icReceipt from "@iconify/icons-ic/twotone-receipt";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'vex';
+  title = 'Mi EncofradoApp';
 
   constructor(private configService: ConfigService,
               private styleService: StyleService,
@@ -82,7 +82,7 @@ export class AppComponent {
     this.navigationService.items = [
       {
         type: 'link',
-        label: 'Dashboard',
+        label: 'Tablero',
         route: '/',
         icon: icLayers
       },
