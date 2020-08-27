@@ -2,123 +2,190 @@
   <div @fadeInUp class="card p-16">
     <div fxLayout="row">
       <div fxFlex="50%">
-        <img class="h-40" src="assets/img/logo.png">
+        <img class="h-40" src="assets/img/logo.png" />
 
         <div class="mt-12">
-          <h4 class="body-2 text-secondary mt-0">INFORMACION DEL CLIENTE</h4>
-          <h3 class="title m-0">Johnny Israel Villacís Abril</h3>
+          <h4 class="mt-0">
+            INFORMACION DEL CLIENTE
+          </h4>
+          <h3 class="title m-0">
+            {{contrato.cliente.nombre |titlecase}}
+            {{contrato.cliente.nombre2|titlecase}}
+          </h3>
           <div class="text-secondary">
-            <p class="m-0">Dirección de la obra: Panamericana Norte Km 4 - El Pisque</p>
-            <p class="m-0">Fecha Alquiler: 03/28</p>
-            <p class="m-0">Celular: 0980 671 071 - 0959 583 032</p>
+            <p class="m-0">Cédula: {{contrato.cliente.cedula }}</p>
+            <p class="m-0">
+              Dirección de la obra: {{contrato.cliente.direccion }} -
+              {{contrato.cliente.direccion2 }}
+            </p>
+            <p class="m-0">Email: {{contrato.cliente.email }}</p>
+            <p class="m-0">
+              Celular: {{contrato.cliente.telf1 }} - {{contrato.cliente.telf2 }}
+              - {{contrato.cliente.telf3 }}
+            </p>
           </div>
         </div>
       </div>
 
-      <div class="text-right body-1" fxFlex="50%" fxLayout="column" fxLayoutAlign="start end">
-        <h1 class="display-2 m-0">CONTRATO DE ALQUILER</h1>
-
+      <div
+        class="text-right body-1"
+        fxFlex="50%"
+        fxLayout="column"
+        fxLayoutAlign="start end"
+      >
+        <h1 class="display-2 m-0">
+          CONTRATO DE ALQUILER # {{contrato.numero }}
+        </h1>
         <table class="mt-6">
           <tbody>
-          <tr>
-            <td class="text-secondary body-2">CONTRATO NO.</td>
-            <td class="text-left pl-4">2019/0592</td>
-          </tr>
-          <tr>
-            <td class="text-secondary body-2">CONTRATO FECHA</td>
-            <td class="text-left pl-4">10/04/2019</td>
-          </tr>         
+            <tr>
+              <td class="text-secondary body-2">FECHA DE ALQUILER</td>
+              <td class="text-left pl-4">{{contrato.fecha_inicio }}</td>
+            </tr>
+            <tr>
+              <td class="text-secondary body-2">FECHA DE ENTREGA</td>
+              <td class="text-left pl-4">{{contrato.fecha_entrega }}</td>
+            </tr>
           </tbody>
         </table>
-
         <div class="mt-12">
           <h4 class="body-2 text-secondary mt-0">LOSAS Y ENCOFRADOS</h4>
           <h3 class="title m-0">EL PROGRESO</h3>
           <div class="text-secondary">
             <p class="m-0">Panamericana Norte Km 4 - El Pisque</p>
-
-            <p class="m-0 mt-3">
-              <ic-icon [icon]="icMail" class="mr-2" inline="true" size="1.25em"></ic-icon>
-              <span>ferreteria_elprogreso@gmail.com</span>
-            </p>
-
             <p class="m-0">
-              <ic-icon [icon]="icPhone" class="mr-2" inline="true" size="1.25em"></ic-icon>
-              <span>0980 671 071</span><br>
-              <span>0959 583 032</span><br>
+              <ic-icon
+                [icon]="icPhone"
+                class="mr-2"
+                inline="true"
+                size="1.25em"
+              ></ic-icon>
+              <span>0980 671 071</span> - <span>0959 583 032</span>
+            </p>
+            <p class="m-0">
+              <ic-icon
+                [icon]="icPhone"
+                class="mr-2"
+                inline="true"
+                size="1.25em"
+              ></ic-icon>
               <span>03-2 865 599</span>
+            </p>
+            <p class="m-0 mt-3">
+              <ic-icon
+                [icon]="icMail"
+                class="mr-2"
+                inline="true"
+                size="1.25em"
+              ></ic-icon>
+              <span>ferreteria_elprogreso@gmail.com</span>
             </p>
           </div>
         </div>
       </div>
     </div>
-
-    <table class="table w-full mt-24">
-      <thead>
-      <tr>
-        <td class="body-2 text-secondary">PRODUCTO O SERVICIO</td>
-        <td class="body-2 text-secondary">HISTORIAL</td>
-        <td class="body-2 text-secondary">ENTREGADO</td>
-        <td class="body-2 text-secondary">DEVUELTO</td>
-        <td class="body-2 text-secondary text-right">TOTAL</td>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td class="py-6 border-b">New Dashboard Prototype, Design & Code</td>
-        <td class="py-6 border-b">$35.00</td>
-        <td class="py-6 border-b">Hour</td>
-        <td class="py-6 border-b">40</td>
-        <td class="py-6 border-b font-medium text-right">$1,400.00</td>
-      </tr>
-
-      <tr>
-        <td class="py-6 border-b">Graphic Pack - Monthly Subscription (includes Updates)</td>
-        <td class="py-6 border-b">$49.99</td>
-        <td class="py-6 border-b">User</td>
-        <td class="py-6 border-b">5</td>
-        <td class="py-6 border-b font-medium text-right">$249.95</td>
-      </tr>
-
-      <tr>
-        <td class="py-6 border-b">Logo & Branding Pack</td>
-        <td class="py-6 border-b">$499.99</td>
-        <td class="py-6 border-b">Piece</td>
-        <td class="py-6 border-b">1</td>
-        <td class="py-6 border-b font-medium text-right">$499.99</td>
-      </tr>
-
-      <tr>
-        <td class="py-6 border-b">Bug Fixes</td>
-        <td class="py-6 border-b">$15.00</td>
-        <td class="py-6 border-b">Hour</td>
-        <td class="py-6 border-b">10</td>
-        <td class="py-6 border-b font-medium text-right">$150.00</td>
-      </tr>
-      </tbody>
-    </table>
-
-    <div class="mt-8" fxLayout="column" fxLayoutAlign="start end">
-      <table class="subheading-2 font-medium pr-6">
-        <tbody>
-        <tr>
-          <td class="text-secondary text-right">SUBTOTAL</td>
-          <td class="pl-12">$2,299.94‬</td>
-        </tr>
-        <tr>
-          <td class="text-secondary text-right">IVA (12%)</td>
-          <td class="pl-12">$436.99‬</td>
-        </tr>
-        <tr>
-          <td class="text-secondary text-right">DESCUENTO (5%)</td>
-          <td class="pl-12">-$114.99‬</td>
-        </tr>
-        <tr>
-          <td class="headline font-medium text-right pt-6">TOTAL</td>
-          <td class="headline font-medium pl-12 pt-6">$2,621.94‬</td>
-        </tr>
-        </tbody>
-      </table>
+    <!-- PRODUCTOS -->
+    <div fxLayout="row">
+      <div @fadeInUp class="card" fxFlex="auto">
+        <table class="table w-full mt-24">
+          <thead>
+            <tr>
+              <td class="body-2 text-secondary">PRODUCTO O SERVICIO</td>
+              <td class="body-2 text-secondary">HISTORIAL</td>
+              <td class="body-2 text-secondary">ENTREGADO</td>
+              <td class="body-2 text-secondary">DEVUELTO</td>
+              <!-- <td class="body-2 text-secondary text-right">TOTAL</td> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let articulo_alquiler of contrato.articulo_alquilers">
+              <td class="py-6 border-b">
+                {{articulo_alquiler.articulo.nombre_producto}}
+              </td>
+              <td class="py-6 border-b">
+                <label
+                  *ngFor="let devolucion of articulo_alquiler.historial_devolucions"
+                >
+                  <span *ngIf="devolucion.cantidad_entregado!=0">
+                    +{{devolucion.cantidad_entregado}}
+                  </span>
+                  <span *ngIf="devolucion.cantidad_devuelto!=0">
+                    -{{devolucion.cantidad_devuelto}}
+                  </span>
+                </label>
+              </td>
+              <td class="py-6 border-b">
+                {{articulo_alquiler.cantidad_entregado}}
+              </td>
+              <td class="py-6 border-b">
+                {{articulo_alquiler.cantidad_devuelto}}
+              </td>
+              <!-- <td class="py-6 border-b font-medium text-right">$1,400.00</td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <!-- DETALLES -->
+      <div fxFlex="50%">
+        <div class="mt-12">
+          <div @fadeInUp class="card" fxFlex="auto">
+            <div
+              class="px-6 py-4 border-b"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+            >
+              <h2 class="title m-0">DETALLES</h2>
+            </div>
+            <div class="text-secondary">
+              <p class="m-0">Valor / m<sup>2</sup>: {{contrato.metros }}</p>
+              <p class="m-0">
+                Area: {{contrato.area }} - {{contrato.cliente.direccion2 }}
+              </p>
+              <p class="m-0">
+                Flete Entrega:
+                <span *ngIf="contrato.transporte_entrega">SI</span
+                ><span *ngIf="!contrato.transporte_entrega">No</span>
+              </p>
+              <p class="m-0">
+                Flete Devolucion:
+                <span *ngIf="contrato.transporte_devolucion">SI</span
+                ><span *ngIf="!contrato.transporte_devolucion">No</span>
+              </p>
+              <p class="m-0">
+                Observaciones: {{contrato.observacion }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- PAGOS -->
+      <div fxFlex="50%">
+        <div class="mt-12">
+          
+          
+            <table class="subheading-2 font-medium pr-6">
+              <tbody >
+                <tr>
+                  <td class="text-secondary text-right">ABONO</td>
+                  <td class="pl-12">
+                    <label *ngFor="let pago of contrato.detalle_pagos">
+                      + {{pago.valor}}
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-secondary text-right">TOTAL</td>
+                  <td class="pl-12">
+                    {{contrato.valor_total }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+         
+        </div>
+      </div>
     </div>
   </div>
 </div>

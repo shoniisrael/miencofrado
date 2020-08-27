@@ -18,6 +18,8 @@ export class Contrato {
     devuelto: boolean;
     pago_cancelado: boolean;
     valor_total: DoubleRange;
+    articulo_alquilers:any[];
+    detalle_pagos:any[];
 
 
   constructor(customer) {
