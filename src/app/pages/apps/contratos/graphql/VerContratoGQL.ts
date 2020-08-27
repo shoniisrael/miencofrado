@@ -1,11 +1,17 @@
-import { Injectable } from "@angular/core";
-import { Mutation } from "apollo-angular";
+import { Injectable} from "@angular/core";
+import {Query} from 'apollo-angular';
 import gql from "graphql-tag";
+
+import { Contrato } from 'src/app/models/contratoalquiler.model';
+
+export interface Response {
+  posts: Contrato;
+}
 
 @Injectable({
   providedIn: "root",
 })
-export class VerContratoGQL extends Mutation {
+export class VerContratoGQL extends Query<Response> {
   document = gql`
     query {
       contrato_alquiler_by_pk(id: 10) {
