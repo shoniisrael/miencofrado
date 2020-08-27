@@ -14,8 +14,8 @@ export interface Response {
 })
 export class VerContratoGQL extends Mutation<Response> {
   document = gql`
-    query {
-      contrato_alquiler_by_pk(id: 1) {
+    query ( $id: Int!){     
+      contrato_alquiler_by_pk(id: $id) {
         id
         area
         descripcion

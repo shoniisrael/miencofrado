@@ -34,7 +34,7 @@ export class InvoiceComponent implements OnInit {
 
   getData() {
     return this.verContratoGQL.mutate({
-      // articulo_alquilers: this.verticalContratoFormGroup.value
+      id: 10
     });
   }
 
