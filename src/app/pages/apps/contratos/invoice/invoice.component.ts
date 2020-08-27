@@ -21,6 +21,8 @@ export class InvoiceComponent implements OnInit {
   icMail = icMail;
   icPhone = icPhone;
   data: Observable<Contrato>;
+  contrato: Contrato;
+  contrato_data: Observable<Contrato>;
   constructor(
     private snackbar: MatSnackBar,
     private verContratoGQL: VerContratoGQL,
@@ -31,23 +33,23 @@ export class InvoiceComponent implements OnInit {
   // area: "28"
   // articulo_alquilers: []
   // cliente: {
-    //     cedula: "111111"
-    //     direccion: "ambato"
-    //     direccion2: "ambato"
-    //     email: "correo@hasjnd"
-    //     nombre: "vale"
-    //     nombre2: "fernanda"
-    //     observacion: null
-    //     telf1: "55565"
-    //     telf2: null
-    //     telf3: null    
-    // }
+  //     cedula: "111111"
+  //     direccion: "ambato"
+  //     direccion2: "ambato"
+  //     email: "correo@hasjnd"
+  //     nombre: "vale"
+  //     nombre2: "fernanda"
+  //     observacion: null
+  //     telf1: "55565"
+  //     telf2: null
+  //     telf3: null
+  // }
   // descripcion: null
   // detalle_pagos: [
-    //     fecha 
-    //     observacion 
-    //     saldo 
-    //     valor
+  //     fecha
+  //     observacion
+  //     saldo
+  //     valor
   // ]
   // devuelto: null
   // estado_actual: {descripcion: "INICIADO"}
@@ -63,25 +65,26 @@ export class InvoiceComponent implements OnInit {
   // valor_total: null
 
   getData() {
-    this.verContratoGQL
-      .mutate({
-        // articulo_alquilers: this.verticalContratoFormGroup.value
-      })
-      .subscribe(
-        ({ data }) => {
-          console.log(data);
-          // this.subject$.next(data);
-          this.openSnackbar("Contrato Recuperado Exitosamente");
-        },
-        (error) => {
-          console.log("Error al Recuperado el Contrato", error);
-          this.openSnackbar("Error al Recuperado el Contrato");
-        }
-      );
+    return this.verContratoGQL.mutate({
+      // articulo_alquilers: this.verticalContratoFormGroup.value
+    });
+    // return this.data;
   }
 
   ngOnInit() {
-    this.getData();
+    this.getData().subscribe(
+      ({ data }) => {
+        console.log(data);
+        this.contrato = data.contrato_alquiler_by_pk;
+        console.log(this.contrato);
+        // this.subject$.next(data);
+        this.openSnackbar("Contrato Recuperado Exitosamente");
+      },
+      (error) => {
+        console.log("Error al Recuperado el Contrato", error);
+        this.openSnackbar("Error al Recuperado el Contrato");
+      }
+    );
   }
 
   openSnackbar(mensaje: string) {
