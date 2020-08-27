@@ -22,9 +22,8 @@ export class InvoiceComponent implements OnInit {
   icMail = icMail;
   icPhone = icPhone;
   data: Observable<Contrato>;
-  contrato: Contrato;
-  contrato_data: Observable<Contrato>;
-  constructor(
+  contrato = {} as  Contrato;
+  constructor(    
     private snackbar: MatSnackBar,
     private verContratoGQL: VerContratoGQL,
     private datePipe: DatePipe
@@ -75,7 +74,7 @@ export class InvoiceComponent implements OnInit {
   ngOnInit() {
     this.getData().subscribe(
       ({ data }) => {
-        console.log(data);
+        // console.log(data);
         this.contrato = data.contrato_alquiler_by_pk;
         console.log(this.contrato);
         // this.subject$.next(data);
