@@ -1,21 +1,21 @@
-import { Injectable} from "@angular/core";
-import {Mutation} from 'apollo-angular';
+import { Injectable } from "@angular/core";
+import { Mutation } from "apollo-angular";
 import gql from "graphql-tag";
 
-import { Contrato } from 'src/app/models/contratoalquiler.model';
-import { Observable } from 'apollo-link';
+import { Contrato } from "src/app/models/contratoalquiler.model";
+import { Observable } from "apollo-link";
 
 export interface Response {
   contrato_alquiler_by_pk: Contrato;
 }
- 
+
 @Injectable({
   providedIn: "root",
 })
-export class VerContratoGQL extends Mutation <Response>{
+export class VerContratoGQL extends Mutation<Response> {
   document = gql`
     query {
-      contrato_alquiler_by_pk(id: 10) {
+      contrato_alquiler_by_pk(id: 1) {
         id
         area
         descripcion
@@ -33,6 +33,12 @@ export class VerContratoGQL extends Mutation <Response>{
         articulo_alquilers {
           articulo {
             nombre_producto
+          }
+          historial_devolucions {
+            cantidad_devuelto
+            cantidad_entregado
+            cantidad
+            fecha
           }
           cantidad_devuelto
           cantidad_entregado

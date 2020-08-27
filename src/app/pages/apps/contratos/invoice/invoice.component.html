@@ -53,7 +53,24 @@
           <h3 class="title m-0">EL PROGRESO</h3>
           <div class="text-secondary">
             <p class="m-0">Panamericana Norte Km 4 - El Pisque</p>
-
+            <p class="m-0">
+              <ic-icon
+                [icon]="icPhone"
+                class="mr-2"
+                inline="true"
+                size="1.25em"
+              ></ic-icon>
+              <span>0980 671 071</span> - <span>0959 583 032</span>
+            </p>
+            <p class="m-0">
+              <ic-icon
+                [icon]="icPhone"
+                class="mr-2"
+                inline="true"
+                size="1.25em"
+              ></ic-icon>
+              <span>03-2 865 599</span>
+            </p>
             <p class="m-0 mt-3">
               <ic-icon
                 [icon]="icMail"
@@ -62,18 +79,6 @@
                 size="1.25em"
               ></ic-icon>
               <span>ferreteria_elprogreso@gmail.com</span>
-            </p>
-
-            <p class="m-0">
-              <ic-icon
-                [icon]="icPhone"
-                class="mr-2"
-                inline="true"
-                size="1.25em"
-              ></ic-icon>
-              <span>0980 671 071</span><br />
-              <span>0959 583 032</span><br />
-              <span>03-2 865 599</span>
             </p>
           </div>
         </div>
@@ -87,67 +92,82 @@
           <td class="body-2 text-secondary">HISTORIAL</td>
           <td class="body-2 text-secondary">ENTREGADO</td>
           <td class="body-2 text-secondary">DEVUELTO</td>
-          <td class="body-2 text-secondary text-right">TOTAL</td>
+          <!-- <td class="body-2 text-secondary text-right">TOTAL</td> -->
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="py-6 border-b">New Dashboard Prototype, Design & Code</td>
-          <td class="py-6 border-b">$35.00</td>
-          <td class="py-6 border-b">Hour</td>
-          <td class="py-6 border-b">40</td>
-          <td class="py-6 border-b font-medium text-right">$1,400.00</td>
-        </tr>
-
-        <tr>
+        <tr *ngFor="let articulo_alquiler of contrato.articulo_alquilers">
           <td class="py-6 border-b">
-            Graphic Pack - Monthly Subscription (includes Updates)
+            {{articulo_alquiler.articulo.nombre_producto}}
           </td>
-          <td class="py-6 border-b">$49.99</td>
-          <td class="py-6 border-b">User</td>
-          <td class="py-6 border-b">5</td>
-          <td class="py-6 border-b font-medium text-right">$249.95</td>
-        </tr>
-
-        <tr>
-          <td class="py-6 border-b">Logo & Branding Pack</td>
-          <td class="py-6 border-b">$499.99</td>
-          <td class="py-6 border-b">Piece</td>
-          <td class="py-6 border-b">1</td>
-          <td class="py-6 border-b font-medium text-right">$499.99</td>
-        </tr>
-
-        <tr>
-          <td class="py-6 border-b">Bug Fixes</td>
-          <td class="py-6 border-b">$15.00</td>
-          <td class="py-6 border-b">Hour</td>
-          <td class="py-6 border-b">10</td>
-          <td class="py-6 border-b font-medium text-right">$150.00</td>
+          <td class="py-6 border-b">
+            <label
+              *ngFor="let devolucion of articulo_alquiler.historial_devolucions"
+            >
+              <span *ngIf="devolucion.cantidad_entregado!=0">
+                +{{devolucion.cantidad_entregado}}
+              </span>
+              <span *ngIf="devolucion.cantidad_devuelto!=0">
+                -{{devolucion.cantidad_devuelto}}
+              </span>
+            </label>
+          </td>
+          <td class="py-6 border-b">
+            {{articulo_alquiler.cantidad_entregado}}
+          </td>
+          <td class="py-6 border-b">{{articulo_alquiler.cantidad_devuelto}}</td>
+          <!-- <td class="py-6 border-b font-medium text-right">$1,400.00</td> -->
         </tr>
       </tbody>
     </table>
-
-    <div class="mt-8" fxLayout="column" fxLayoutAlign="start end">
-      <table class="subheading-2 font-medium pr-6">
-        <tbody>
-          <tr>
-            <td class="text-secondary text-right">SUBTOTAL</td>
-            <td class="pl-12">$2,299.94‬</td>
-          </tr>
-          <tr>
-            <td class="text-secondary text-right">IVA (12%)</td>
-            <td class="pl-12">$436.99‬</td>
-          </tr>
-          <tr>
-            <td class="text-secondary text-right">DESCUENTO (5%)</td>
-            <td class="pl-12">-$114.99‬</td>
-          </tr>
-          <tr>
-            <td class="headline font-medium text-right pt-6">TOTAL</td>
-            <td class="headline font-medium pl-12 pt-6">$2,621.94‬</td>
-          </tr>
-        </tbody>
-      </table>
+    <div fxLayout="row">
+      <div fxFlex="50%">
+        <div class="mt-12">
+          <h4 class="mt-0">
+            INFORMACION DEL CLIENTE
+          </h4>
+          <h3 class="title m-0">
+            {{contrato.cliente.nombre |titlecase}}
+            {{contrato.cliente.nombre2|titlecase}}
+          </h3>
+          <div class="text-secondary">
+            <p class="m-0">Cédula: {{contrato.cliente.cedula }}</p>
+            <p class="m-0">
+              Dirección de la obra: {{contrato.cliente.direccion }} -
+              {{contrato.cliente.direccion2 }}
+            </p>
+            <p class="m-0">Email: {{contrato.cliente.email }}</p>
+            <p class="m-0">
+              Celular: {{contrato.cliente.telf1 }} - {{contrato.cliente.telf2 }}
+              - {{contrato.cliente.telf3 }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="50%">
+        <div class="mt-8" fxLayout="column" fxLayoutAlign="start end">
+          <table class="subheading-2 font-medium pr-6">
+            <tbody>
+              <tr>
+                <td class="text-secondary text-right">SUBTOTAL</td>
+                <td class="pl-12">$2,299.94‬</td>
+              </tr>
+              <tr>
+                <td class="text-secondary text-right">IVA (12%)</td>
+                <td class="pl-12">$436.99‬</td>
+              </tr>
+              <tr>
+                <td class="text-secondary text-right">DESCUENTO (5%)</td>
+                <td class="pl-12">-$114.99‬</td>
+              </tr>
+              <tr>
+                <td class="headline font-medium text-right pt-6">TOTAL</td>
+                <td class="headline font-medium pl-12 pt-6">$2,621.94‬</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
