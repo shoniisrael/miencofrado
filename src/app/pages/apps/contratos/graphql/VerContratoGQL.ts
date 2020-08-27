@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 import { Contrato } from 'src/app/models/contratoalquiler.model';
 
 export interface Response {
-  posts: Contrato;
+  contrato: Contrato;
 }
 
 @Injectable({
