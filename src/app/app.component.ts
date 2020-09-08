@@ -84,7 +84,8 @@ export class AppComponent {
         type: 'link',
         label: 'Tablero',
         route: '/',
-        icon: icLayers
+        icon: icLayers,
+        routerLinkActiveOptions: { exact: true }
       },
       {
         type: "subheading",

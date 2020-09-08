@@ -24,6 +24,7 @@ import { stagger40ms } from "../../../../@vex/animations/stagger.animation";
 import theme from "../../../../../tailwind.config.js";
 //iconos
 import icEdit from "@iconify/icons-ic/twotone-edit";
+import icPageView from "@iconify/icons-ic/twotone-pageview";
 import icDelete from "@iconify/icons-ic/twotone-delete";
 import icSearch from "@iconify/icons-ic/twotone-search";
 import icAdd from "@iconify/icons-ic/twotone-add";
@@ -67,7 +68,7 @@ const GetContratos = queryGetContratos;
   ],
 })
 export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
-  layoutCtrl = new FormControl("fullwidth");
+  layoutCtrl = new FormControl("boxed");
   subject$: ReplaySubject<Contrato[]> = new ReplaySubject<Contrato[]>(1);
   data$: Observable<Contrato[]> = this.subject$.asObservable();
   data: Observable<Contrato[]>;
@@ -81,30 +82,29 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
       type: "checkbox",
       visible: true,
     },
+    { label: "# NUMERO", property: "numero", type: "text", visible: true },
     {
-      label: "cliente.nombre",
-      property: "cliente.nombre",
-      type: "text",
+      label: "NOMBRE CLIENTE",
+      property: "cliente",
+      type: "button",
       visible: true,
     },
-    { label: "numero", property: "numero", type: "text", visible: true },
-    { label: "Actions", property: "actions", type: "button", visible: true },
-
-    { label: "lugar", property: "lugar_obra", type: "text", visible: true },
+    { label: "LUGAR OBRA", property: "lugar_obra", type: "text", visible: true },
     {
-      label: "estado",
+      label: "ESTADO",
       property: "estado_actual.descripcion",
       type: "text",
       visible: true,
     },
-    { label: "area", property: "area", type: "text", visible: true },
-    { label: "metros", property: "metros", type: "text", visible: true },
+    // { label: "area", property: "area", type: "text", visible: true },
+    // { label: "metros", property: "metros", type: "text", visible: true },
     {
       label: "observacion",
       property: "observacion",
       type: "text",
       visible: true,
     },
+    { label: "Actions", property: "actions", type: "button", visible: true },
   ];
 
   pageSize = 10;
@@ -114,6 +114,7 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
   searchCtrl = new FormControl();
 
   icPhone = icPhone;
+  icPageView = icPageView;
   icMail = icMail;
   icMap = icMap;
   icEdit = icEdit;
@@ -159,8 +160,6 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data$.pipe(filter<Contrato[]>(Boolean)).subscribe((customers) => {
       this.customers = customers;
       this.dataSource.data = customers;
-      console.log(this.customers);
-      console.log(this.dataSource.data);
     });
 
     this.searchCtrl.valueChanges
@@ -176,8 +175,8 @@ export class ContratosComponent implements OnInit, AfterViewInit, OnDestroy {
   createCustomer() {
     this.router.navigate(["apps/contratos/create"]);
   }
-  viewContrato() {
-    this.router.navigate(["apps/contratos/ver", 2 ]);
+  viewContrato(customer: Contrato) {
+    this.router.navigate(["apps/contratos/ver", customer.id]);
   }
 
   updateCustomer(customer: Contrato) {

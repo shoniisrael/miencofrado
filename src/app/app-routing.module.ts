@@ -8,6 +8,14 @@ const routes: Routes = [
     component: CustomLayoutComponent,
     children: [
       {
+        path: 'dashboards/analytics',
+        redirectTo: '/'
+      },
+      {
+        path: '',
+        loadChildren: () => import('./pages/dashboards/dashboard-analytics/dashboard-analytics.module').then(m => m.DashboardAnalyticsModule),
+      },
+      {
         path: "apps",
         children: [
           {
