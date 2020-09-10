@@ -19,7 +19,7 @@
                                iconClass="text-primary bg-primary-light"
                                gdColumn.lt-sm="1"
                                label="Contratos"
-                               value="27"></vex-widget-quick-line-chart>
+                               value="{{numClientes}}"></vex-widget-quick-line-chart>
 
   <vex-widget-quick-line-chart [icon]="icGroup"
                                [options]="uniqueUsersOptions"
@@ -27,7 +27,7 @@
                                iconClass="text-orange bg-orange-light"
                                gdColumn.lt-sm="1"
                                label="Clientes"
-                               value="35"></vex-widget-quick-line-chart>
+                               value="{{numClientes}}"></vex-widget-quick-line-chart>
 
   <vex-widget-large-chart [series]="userSessionsSeries"
                           gdColumn="1 / 3"

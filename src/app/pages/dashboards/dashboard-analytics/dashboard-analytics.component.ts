@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit,Input } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, Input } from "@angular/core";
 import icGroup from "@iconify/icons-ic/twotone-group";
 import icPageView from "@iconify/icons-ic/twotone-pageview";
 import icCloudOff from "@iconify/icons-ic/twotone-cloud-off";
@@ -8,20 +8,19 @@ import { Order, tableSalesData } from "../../../static-data/table-sales-data";
 import { TableColumn } from "../../../../@vex/interfaces/table-column.interface";
 import icMoreVert from "@iconify/icons-ic/twotone-more-vert";
 
-
-import { Observable, ReplaySubject } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { filter } from 'rxjs/operators';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-import { map } from 'rxjs/operators';
+import { Observable, ReplaySubject } from "rxjs";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { filter } from "rxjs/operators";
+import { Apollo } from "apollo-angular";
+import gql from "graphql-tag";
+import { map } from "rxjs/operators";
 
 //Modelo
 import { Cliente } from "src/app/models/cliente.model";
 import { queryGetClientes } from "src/app/services/clientes";
 import { DeleteClienteGQL } from "../../apps/clientes/graphql/DeleteClienteGQL";
 import { CustomerCreateUpdateComponent } from "../../apps/clientes/customer-create-update/customer-create-update.component";
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from "@angular/material/table";
 
 export type Query = {
   cliente: Cliente[];
@@ -39,37 +38,39 @@ export class DashboardAnalyticsComponent implements OnInit {
   data: Observable<Cliente[]>;
   customers: Cliente[];
 
-  
+  numClientes: number;
+
   @Input()
   columns: TableColumn<Cliente>[] = [
     {
-      label: 'Checkbox',
-      property: 'checkbox',
-      type: 'checkbox',
+      label: "Checkbox",
+      property: "checkbox",
+      type: "checkbox",
       visible: true,
     },
-    { label: 'cedula', property: 'cedula', type: 'text', visible: true },
-    { label: 'nombre', property: 'nombre', type: 'text', visible: true },
-    { label: 'nombre2', property: 'nombre2', type: 'text', visible: true },
-    { label: 'email', property: 'email', type: 'text', visible: false },
-    { label: 'telf1', property: 'telf1', type: 'text', visible: true },
-    { label: 'telf2', property: 'telf2', type: 'text', visible: true },
-    { label: 'telf3', property: 'telf3', type: 'text', visible: false },
-    { label: 'direccion', property: 'direccion', type: 'text', visible: true },
+    { label: "cedula", property: "cedula", type: "text", visible: true },
+    { label: "nombre", property: "nombre", type: "text", visible: true },
+    { label: "nombre2", property: "nombre2", type: "text", visible: true },
+    { label: "email", property: "email", type: "text", visible: false },
+    { label: "telf1", property: "telf1", type: "text", visible: true },
+    { label: "telf2", property: "telf2", type: "text", visible: true },
+    { label: "telf3", property: "telf3", type: "text", visible: false },
+    { label: "direccion", property: "direccion", type: "text", visible: true },
     {
-      label: 'direccion2',
-      property: 'direccion2',
-      type: 'text',
+      label: "direccion2",
+      property: "direccion2",
+      type: "text",
       visible: false,
     },
     {
-      label: 'observacion',
-      property: 'observacion',
-      type: 'text',
+      label: "observacion",
+      property: "observacion",
+      type: "text",
       visible: true,
     },
-    { label: 'Actions', property: 'actions', type: 'button', visible: true },
+    { label: "Actions", property: "actions", type: "button", visible: true },
   ];
+
   dataSource: MatTableDataSource<Cliente> | null;
 
   tableColumns: TableColumn<Order>[] = [
@@ -151,13 +152,7 @@ export class DashboardAnalyticsComponent implements OnInit {
   icTimer = icTimer;
   icMoreVert = icMoreVert;
 
-  constructor(private cd: ChangeDetectorRef,  private apollo: Apollo) {}
-
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
-  }
+  constructor(private cd: ChangeDetectorRef, private apollo: Apollo) {}
 
   getData() {
     this.data = this.apollo
@@ -167,30 +162,31 @@ export class DashboardAnalyticsComponent implements OnInit {
   }
 
   ngOnInit() {
-   
-      this.getData().subscribe((customers) => {
-        this.subject$.next(customers);
-        console.log(customers);
-      });
-  
-      this.dataSource = new MatTableDataSource();
-  
-      this.data$.pipe(filter<Cliente[]>(Boolean)).subscribe((customers) => {
-        this.customers = customers;
-        this.dataSource.data = customers;
-      });
+    this.numClientes = 0;
+    this.getData().subscribe((customers) => {
+      this.subject$.next(customers);
+      // console.log(customers);
+      // console.log(customers.length);
+      this.numClientes = customers.length;
+    });
 
-  
-    // setTimeout(() => {       
-      // const temp = [
-      //   {
-      //     name: "Subscribers",
-      //     data: [55, 213, 55, 0, 213, 55, 33, 55],
-      //   },
-      //   {
-      //     name: "",
-      //   },
-      // ];
+    this.dataSource = new MatTableDataSource();
+
+    this.data$.pipe(filter<Cliente[]>(Boolean)).subscribe((customers) => {
+      this.customers = customers;
+      this.dataSource.data = customers;
+    });
+
+    // setTimeout(() => {
+    // const temp = [
+    //   {
+    //     name: "Subscribers",
+    //     data: [55, 213, 55, 0, 213, 55, 33, 55],
+    //   },
+    //   {
+    //     name: "",
+    //   },
+    // ];
     // }, 3000);
   }
 }
