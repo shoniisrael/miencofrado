@@ -10,15 +10,15 @@ export class UpdateClienteGQL extends Mutation {
     mutation MyMutation(
       $id: Int!
       $cedula: String!
-      $direccion: String!
-      $direccion2: String!
-      $email: String!
+      $direccion: String
+      $direccion2: String
+      $email: String
       $nombre: String!
-      $nombre2: String!
-      $observacion: String!
-      $telf1: String!
-      $telf2: String!
-      $telf3: String!
+      $nombre2: String
+      $observacion: String
+      $telf1: String
+      $telf2: String
+      $telf3: String
     ) {
       update_cliente(
         _set: {

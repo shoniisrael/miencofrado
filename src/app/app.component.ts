@@ -111,12 +111,7 @@ export class AppComponent {
                 type: "link",
                 label: "Nuevo Contrato",
                 route: "/apps/contratos/create",
-              },
-              {
-                type: "link",
-                label: "Mi Contrato",
-                route: "/apps/contratos/ver",
-              },
+              }
             ],
           },
         ],
