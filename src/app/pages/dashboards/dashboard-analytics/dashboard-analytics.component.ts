@@ -22,10 +22,21 @@ import { DeleteClienteGQL } from "../../apps/clientes/graphql/DeleteClienteGQL";
 import { CustomerCreateUpdateComponent } from "../../apps/clientes/customer-create-update/customer-create-update.component";
 import { MatTableDataSource } from "@angular/material/table";
 
+
+//Modelo
+// import { CustomerCreateUpdateComponent } from "./customer-create-update/customer-create-update.component";xdxd
+import { Contrato } from "src/app/models/contratoalquiler.model";
+import { queryGetContratos } from "src/app/services/contratos";
+import { DeleteContratoGQL } from "../../apps/contratos/graphql/DeleteContratoGQL";
 export type Query = {
   cliente: Cliente[];
 };
 const GetClientes = queryGetClientes;
+
+export type Query2 = {
+  contrato_alquiler: Contrato[];
+};
+const GetContratos = queryGetContratos;
 
 @Component({
   selector: "vex-dashboard-analytics",
@@ -37,8 +48,13 @@ export class DashboardAnalyticsComponent implements OnInit {
   data$: Observable<Cliente[]> = this.subject$.asObservable();
   data: Observable<Cliente[]>;
   customers: Cliente[];
-
   numClientes: number;
+
+  subject2$: ReplaySubject<Contrato[]> = new ReplaySubject<Contrato[]>(1);
+  data2$: Observable<Contrato[]> = this.subject2$.asObservable();
+  data2: Observable<Contrato[]>;
+  customers2: Contrato[];
+  numContratos: number;
 
   @Input()
   columns: TableColumn<Cliente>[] = [
@@ -161,22 +177,39 @@ export class DashboardAnalyticsComponent implements OnInit {
     return this.data;
   }
 
+  getData2() {
+    this.data2 = this.apollo
+      .watchQuery<Query2>({ query: GetContratos })
+      .valueChanges.pipe(map(({ data }) => data.contrato_alquiler));
+    return this.data2;
+  }
+
+
   ngOnInit() {
     this.numClientes = 0;
+    this.numContratos = 0;
+    
     this.getData().subscribe((customers) => {
       this.subject$.next(customers);
       // console.log(customers);
       // console.log(customers.length);
       this.numClientes = customers.length;
     });
-
     this.dataSource = new MatTableDataSource();
-
     this.data$.pipe(filter<Cliente[]>(Boolean)).subscribe((customers) => {
       this.customers = customers;
       this.dataSource.data = customers;
     });
 
+
+    this.getData2().subscribe((customers2) => {
+      this.subject2$.next(customers2);
+      // console.log(customers);
+      // console.log(customers[0].cliente.nombre);
+      console.log(customers2.length);
+      this.numContratos = customers2.length;
+
+    });
     // setTimeout(() => {
     // const temp = [
     //   {
