@@ -60,15 +60,26 @@ export class DashboardAnalyticsComponent implements OnInit {
   numContratos: number;
 
   // @Input()
-  tableColumns: TableColumn<Contrato>[] = [
-    { label: "# NUMERO", property: "numero", type: "text", visible: true },   
+  tableColumns: TableColumn<any>[] = [
+    { label: "# NUMERO", property: "numero", type: "text", visible: true },
+    {
+      label: "Cliente",
+      property: "descripcion",
+      type: "text",
+      visible: true,
+    },
     {
       label: "LUGAR OBRA",
       property: "lugar_obra",
       type: "text",
       visible: true,
-    }   
-    
+    },
+    {
+      label: "Fecha Entrega",
+      property: "observacion",
+      type: "text",
+      visible: true,
+    },
   ];
 
   //estadisticas
@@ -187,6 +198,18 @@ export class DashboardAnalyticsComponent implements OnInit {
     this.getData2().subscribe((customers2) => {
       this.subject2$.next(customers2);
       this.numContratos = customers2.length;
+      customers2.forEach((value) => {
+        if (value.fecha_entrega !== null) {
+          value.observacion = value.fecha_entrega.toString();
+        } else {
+          value.observacion = "";
+        }
+        if (value.cliente.nombre !== null) {
+          value.descripcion = value.cliente.nombre;
+        } else {
+          value.descripcion = "Consumidor Final";
+        }
+      });
       this.tableData = customers2;
       console.log(this.tableData);
       this.metrosAlquilados = customers2.reduce((sum, value) => {
