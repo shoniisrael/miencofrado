@@ -48,8 +48,8 @@
     gdColumn.lt-md="1 / -1"
     gdColumn.lt-sm="1"
   ></vex-widget-large-chart>
-
   <vex-widget-table
+  *ngIf="tableData"
     [columns]="tableColumns"
     [data]="tableData"
     class="w-full overflow-auto shadow"
@@ -57,6 +57,8 @@
     gdColumn.lt-md="1 / -1"
     gdColumn.lt-sm="1"
   ></vex-widget-table>
+
+ 
   <vex-widget-quick-value-center
     [change]="23.7"
     [icon]="icPageView"

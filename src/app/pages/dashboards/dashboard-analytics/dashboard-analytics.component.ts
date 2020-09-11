@@ -4,7 +4,7 @@ import icPageView from "@iconify/icons-ic/twotone-pageview";
 import icCloudOff from "@iconify/icons-ic/twotone-cloud-off";
 import icTimer from "@iconify/icons-ic/twotone-timer";
 import { defaultChartOptions } from "../../../../@vex/utils/default-chart-options";
-import { Order, tableSalesData } from "../../../static-data/table-sales-data";
+// import { Order, tableSalesData } from "../../../static-data/table-sales-data";
 import { TableColumn } from "../../../../@vex/interfaces/table-column.interface";
 import icMoreVert from "@iconify/icons-ic/twotone-more-vert";
 
@@ -28,6 +28,7 @@ import { Contrato } from "src/app/models/contratoalquiler.model";
 import { queryGetContratos } from "src/app/services/contratos";
 import { DeleteContratoGQL } from "../../apps/contratos/graphql/DeleteContratoGQL";
 import { isNull } from "util";
+
 export type Query = {
   cliente: Cliente[];
 };
@@ -44,81 +45,66 @@ const GetContratos = queryGetContratos;
   styleUrls: ["./dashboard-analytics.component.scss"],
 })
 export class DashboardAnalyticsComponent implements OnInit {
+  //clientes
   subject$: ReplaySubject<Cliente[]> = new ReplaySubject<Cliente[]>(1);
   data$: Observable<Cliente[]> = this.subject$.asObservable();
   data: Observable<Cliente[]>;
   customers: Cliente[];
   numClientes: number;
 
+  //contratos
   subject2$: ReplaySubject<Contrato[]> = new ReplaySubject<Contrato[]>(1);
   data2$: Observable<Contrato[]> = this.subject2$.asObservable();
   data2: Observable<Contrato[]>;
   customers2: Contrato[];
   numContratos: number;
 
+  // @Input()
+  tableColumns: TableColumn<Contrato>[] = [
+    { label: "# NUMERO", property: "numero", type: "text", visible: true },   
+    {
+      label: "LUGAR OBRA",
+      property: "lugar_obra",
+      type: "text",
+      visible: true,
+    }   
+    
+  ];
+
+  //estadisticas
   metrosAlquilados: number;
   valorTotal: number;
   porCobrar: number;
   porDevolver: number;
 
-  @Input()
-  columns: TableColumn<Cliente>[] = [
-    {
-      label: "Checkbox",
-      property: "checkbox",
-      type: "checkbox",
-      visible: true,
-    },
-    { label: "cedula", property: "cedula", type: "text", visible: true },
-    { label: "nombre", property: "nombre", type: "text", visible: true },
-    { label: "nombre2", property: "nombre2", type: "text", visible: true },
-    { label: "email", property: "email", type: "text", visible: false },
-    { label: "telf1", property: "telf1", type: "text", visible: true },
-    { label: "telf2", property: "telf2", type: "text", visible: true },
-    { label: "telf3", property: "telf3", type: "text", visible: false },
-    { label: "direccion", property: "direccion", type: "text", visible: true },
-    {
-      label: "direccion2",
-      property: "direccion2",
-      type: "text",
-      visible: false,
-    },
-    {
-      label: "observacion",
-      property: "observacion",
-      type: "text",
-      visible: true,
-    },
-    { label: "Actions", property: "actions", type: "button", visible: true },
-  ];
-
   dataSource: MatTableDataSource<Cliente> | null;
 
-  tableColumns: TableColumn<Order>[] = [
-    {
-      label: "",
-      property: "status",
-      type: "badge",
-    },
-    {
-      label: "PRODUCT",
-      property: "name",
-      type: "text",
-    },
-    {
-      label: "$ PRICE",
-      property: "price",
-      type: "text",
-      cssClasses: ["font-medium"],
-    },
-    {
-      label: "DATE",
-      property: "timestamp",
-      type: "text",
-      cssClasses: ["text-secondary"],
-    },
-  ];
-  tableData = tableSalesData;
+  // tableColumns: TableColumn<Order>[] = [
+  //   {
+  //     label: "",
+  //     property: "status",
+  //     type: "badge",
+  //   },
+  //   {
+  //     label: "PRODUCT",
+  //     property: "name",
+  //     type: "text",
+  //   },
+  //   {
+  //     label: "$ PRICE",
+  //     property: "price",
+  //     type: "text",
+  //     cssClasses: ["font-medium"],
+  //   },
+  //   {
+  //     label: "DATE",
+  //     property: "timestamp",
+  //     type: "text",
+  //     cssClasses: ["text-secondary"],
+  //   },
+  // ];
+
+  tableData: Contrato[];
 
   series: ApexAxisChartSeries = [
     {
@@ -195,23 +181,14 @@ export class DashboardAnalyticsComponent implements OnInit {
 
     this.getData().subscribe((customers) => {
       this.subject$.next(customers);
-      // console.log(customers);
-      // console.log(customers.length);
       this.numClientes = customers.length;
-    });
-    this.dataSource = new MatTableDataSource();
-    this.data$.pipe(filter<Cliente[]>(Boolean)).subscribe((customers) => {
-      this.customers = customers;
-      this.dataSource.data = customers;
     });
 
     this.getData2().subscribe((customers2) => {
       this.subject2$.next(customers2);
-      // console.log(customers);
-      // console.log(customers[0].cliente.nombre);
-      // console.log(customers2.length);
       this.numContratos = customers2.length;
-
+      this.tableData = customers2;
+      console.log(this.tableData);
       this.metrosAlquilados = customers2.reduce((sum, value) => {
         let y: number = +value.metros;
         if (!isNaN(y)) {
@@ -246,16 +223,5 @@ export class DashboardAnalyticsComponent implements OnInit {
         return sum;
       }, 0);
     });
-    // setTimeout(() => {
-    // const temp = [
-    //   {
-    //     name: "Subscribers",
-    //     data: [55, 213, 55, 0, 213, 55, 33, 55],
-    //   },
-    //   {
-    //     name: "",
-    //   },
-    // ];
-    // }, 3000);
   }
 }

@@ -27,7 +27,9 @@ export class WidgetTableComponent<T> implements OnInit, OnChanges, AfterViewInit
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.data);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.columns) {
