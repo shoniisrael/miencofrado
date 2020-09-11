@@ -27,6 +27,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Contrato } from "src/app/models/contratoalquiler.model";
 import { queryGetContratos } from "src/app/services/contratos";
 import { DeleteContratoGQL } from "../../apps/contratos/graphql/DeleteContratoGQL";
+import { isNull } from "util";
 export type Query = {
   cliente: Cliente[];
 };
@@ -56,6 +57,9 @@ export class DashboardAnalyticsComponent implements OnInit {
   numContratos: number;
 
   metrosAlquilados: number;
+  valorTotal: number;
+  porCobrar: number;
+  porDevolver: number;
 
   @Input()
   columns: TableColumn<Cliente>[] = [
@@ -213,10 +217,34 @@ export class DashboardAnalyticsComponent implements OnInit {
         if (!isNaN(y)) {
           sum = sum + y;
         }
+        return sum;
+      }, 0);
+      this.valorTotal = customers2.reduce((sum, value) => {
+        if (value.valor_total !== null) {
+          let aux: string = value.valor_total.toString();
+          aux = aux.substr(1);
+          let y: number = +aux;
+          if (!isNaN(y)) {
+            sum = sum + y;
+          }
+        }
 
         return sum;
       }, 0);
-      // console.log(metrosAlquilados);
+      this.porCobrar = customers2.reduce((sum, value) => {
+        if (!value.pago_cancelado) {
+          sum = sum + 1;
+        }
+
+        return sum;
+      }, 0);
+      this.porDevolver = customers2.reduce((sum, value) => {
+        if (!value.devuelto) {
+          sum = sum + 1;
+        }
+
+        return sum;
+      }, 0);
     });
     // setTimeout(() => {
     // const temp = [
