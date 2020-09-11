@@ -22,7 +22,6 @@ import { DeleteClienteGQL } from "../../apps/clientes/graphql/DeleteClienteGQL";
 import { CustomerCreateUpdateComponent } from "../../apps/clientes/customer-create-update/customer-create-update.component";
 import { MatTableDataSource } from "@angular/material/table";
 
-
 //Modelo
 // import { CustomerCreateUpdateComponent } from "./customer-create-update/customer-create-update.component";xdxd
 import { Contrato } from "src/app/models/contratoalquiler.model";
@@ -55,6 +54,8 @@ export class DashboardAnalyticsComponent implements OnInit {
   data2: Observable<Contrato[]>;
   customers2: Contrato[];
   numContratos: number;
+
+  metrosAlquilados: number;
 
   @Input()
   columns: TableColumn<Cliente>[] = [
@@ -184,11 +185,10 @@ export class DashboardAnalyticsComponent implements OnInit {
     return this.data2;
   }
 
-
   ngOnInit() {
     this.numClientes = 0;
     this.numContratos = 0;
-    
+
     this.getData().subscribe((customers) => {
       this.subject$.next(customers);
       // console.log(customers);
@@ -201,14 +201,22 @@ export class DashboardAnalyticsComponent implements OnInit {
       this.dataSource.data = customers;
     });
 
-
     this.getData2().subscribe((customers2) => {
       this.subject2$.next(customers2);
       // console.log(customers);
       // console.log(customers[0].cliente.nombre);
-      console.log(customers2.length);
+      // console.log(customers2.length);
       this.numContratos = customers2.length;
 
+      this.metrosAlquilados = customers2.reduce((sum, value) => {
+        let y: number = +value.metros;
+        if (!isNaN(y)) {
+          sum = sum + y;
+        }
+
+        return sum;
+      }, 0);
+      // console.log(metrosAlquilados);
     });
     // setTimeout(() => {
     // const temp = [
