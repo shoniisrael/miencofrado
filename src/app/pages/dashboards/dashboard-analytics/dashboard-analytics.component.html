@@ -4,9 +4,9 @@
     class="flex-auto"
   ></vex-breadcrumbs>
 
-  <button class="ml-2" color="primary" mat-icon-button type="button">
+  <!-- <button class="ml-2" color="primary" mat-icon-button type="button">
     <mat-icon [icIcon]="icMoreVert"></mat-icon>
-  </button>
+  </button> -->
 </vex-secondary-toolbar>
 
 <div
@@ -26,7 +26,7 @@
   <vex-widget-quick-line-chart
     [icon]="icPageView"
     [series]="pageViewsSeries"
-    iconClass="text-primary bg-primary-light"
+    iconClass="text-green bg-green-light"
     gdColumn.lt-sm="1"
     label="Contratos"
     value="{{numContratos}}"
@@ -49,7 +49,7 @@
     gdColumn.lt-sm="1"
   ></vex-widget-large-chart>
   <vex-widget-table
-  *ngIf="tableData"
+    *ngIf="tableData"
     [columns]="tableColumns"
     [data]="tableData"
     class="w-full overflow-auto shadow"
@@ -58,7 +58,6 @@
     gdColumn.lt-sm="1"
   ></vex-widget-table>
 
- 
   <vex-widget-quick-value-center
     [change]="23.7"
     [icon]="icPageView"
@@ -99,6 +98,6 @@
     [series]="salesSeries"
     gdColumn="1 / -1"
     gdColumn.lt-sm="1"
-    total="4,374"
+    total="$ {{valorTotal}}"
   ></vex-widget-large-goal-chart>
 </div>

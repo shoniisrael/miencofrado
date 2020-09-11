@@ -137,8 +137,8 @@ export class DashboardAnalyticsComponent implements OnInit {
 
   salesSeries: ApexAxisChartSeries = [
     {
-      name: "Sales",
-      data: [28, 40, 36, 0, 52, 38, 60, 55, 99, 54, 38, 87],
+      name: "Ventas",
+      data: [],
     },
   ];
 
@@ -210,6 +210,7 @@ export class DashboardAnalyticsComponent implements OnInit {
           value.descripcion = "Consumidor Final";
         }
       });
+      customers2.reverse();
       this.tableData = customers2;
       console.log(this.tableData);
       this.metrosAlquilados = customers2.reduce((sum, value) => {
@@ -219,16 +220,17 @@ export class DashboardAnalyticsComponent implements OnInit {
         }
         return sum;
       }, 0);
+      let ventas: number[] = [];
       this.valorTotal = customers2.reduce((sum, value) => {
         if (value.valor_total !== null) {
           let aux: string = value.valor_total.toString();
           aux = aux.substr(1);
           let y: number = +aux;
+          ventas.push(y);
           if (!isNaN(y)) {
             sum = sum + y;
           }
         }
-
         return sum;
       }, 0);
       this.porCobrar = customers2.reduce((sum, value) => {
@@ -245,6 +247,11 @@ export class DashboardAnalyticsComponent implements OnInit {
 
         return sum;
       }, 0);
+      this.salesSeries = [
+        {
+          data: ventas,
+        },
+      ];
     });
   }
 }
